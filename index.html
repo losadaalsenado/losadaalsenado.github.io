@@ -63,6 +63,42 @@
             animation: cardEnter 1s ease-out;
         }
 
+        /* --- NUEVA SECCIÓN DE IMAGEN Y ESLOGAN --- */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .brand-image-circle {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-red);
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 21, 0.4);
+            background: #000;
+        }
+
+        .brand-image-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-slogan {
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        /* --------------------------------------- */
+
         @keyframes cardEnter { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
         .sapien-card::before {
@@ -76,6 +112,7 @@
         input, select {
             width: 100%; padding: 14px; background: rgba(0,0,0,0.8); border: 1px solid #222;
             color: white; border-radius: 12px; font-size: 15px; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-sizing: border-box;
         }
         input:focus, select:focus { border-color: var(--primary-red); outline: none; box-shadow: 0 0 15px rgba(255, 0, 21, 0.2); }
 
@@ -124,6 +161,14 @@
         </div>
 
         <div class="sapien-card">
+            
+            <div class="brand-header">
+                <div class="brand-image-circle">
+                    <img src="Imagenes/Inicio-Losada-L22.jpeg" alt="L22 Logo">
+                </div>
+                <div class="brand-slogan">PARTE DE TI, PARTE DE TODOS</div>
+            </div>
+
             <form id="campaignForm">
                 <div class="form-group">
                     <label>Nombre del Aliado</label>
@@ -167,7 +212,6 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    // --- SONIDO TÁCTICO REFINADO ---
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playTacticalPing() {
         if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -176,13 +220,12 @@
         osc.type = 'sine'; 
         osc.frequency.setValueAtTime(1200, audioCtx.currentTime); 
         osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.02, audioCtx.currentTime); // Volumen más leve
+        gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
         osc.connect(gain); gain.connect(audioCtx.destination);
         osc.start(); osc.stop(audioCtx.currentTime + 0.1);
     }
 
-    // --- EFECTO FONDO ---
     const canvas = document.getElementById('pet-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -212,7 +255,6 @@
     }
     animate();
 
-    // --- TYPEWRITER ---
     const textTitle = "L22: EL PODER\nDE LOS SIN VOZ.";
     const textPara = "Únete a la legión que defiende la vida en cada rincón de Bogotá. Escaneamos el territorio para proteger a quienes más lo necesitan.";
     function runTypewriter(text, id, speed, next) {
@@ -225,7 +267,6 @@
         }, speed);
     }
 
-    // --- MAPA TÁCTICO CON GEOLOCALIZACIÓN PRIORITARIA ---
     const map = L.map('map', { zoomControl: false }).setView([4.6097, -74.0817], 11);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '© OSM' }).addTo(map);
     const marker = L.marker([4.6097, -74.0817], { draggable: true }).addTo(map);
@@ -236,7 +277,6 @@
     }
     marker.on('dragend', updateCoords);
 
-    // ESCANEO INMEDIATO (Villamaría/Bogotá/Cualquier punto)
     function startGeoScan() {
         const notify = document.getElementById('geo-notification');
         if ("geolocation" in navigator) {
@@ -253,10 +293,8 @@
             }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
         }
     }
-    // Inicia el escaneo apenas carga el mapa
     startGeoScan();
 
-    // --- ENVÍO CRM ---
     document.getElementById('campaignForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = document.getElementById('btnSubmit');
@@ -276,39 +314,52 @@
 
     runTypewriter(textTitle, "type-title", 50, () => runTypewriter(textPara, "type-para", 25));
 </script>
+
 <section class="vision-section">
+
+    <!-- IMAGENES DE FONDO (CORREGIDO RUTA) -->
+    <img src="./img/Fondo-Crm-L22.jpg" class="hidden-preload" alt="">
+    <img src="./img/ojo-toro.jpg" class="hidden-preload" alt="">
+    <img src="./img/ojo-perro.jpg" class="hidden-preload" alt="">
+    <img src="./img/ojo-gato.jpg" class="hidden-preload" alt="">
+
     <div class="video-background-container">
         <div class="video-overlay"></div>
+
+        <!-- VIDEO AUTOPLAY EN MUTE -->
         <video 
-            autoplay 
-            muted 
-            loop 
-            playsinline 
-            preload="auto" 
-            class="bg-video" 
             id="video-principal-senado"
-            poster="Imagenes/poster-video.jpg">
-            <source src="Video/Lozada-al-senado.mp4" type="video/mp4">
-            Tu navegador no soporta el video.
+            class="bg-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto">
+            <source src="./Video/Lozada-al-senado.mp4" type="video/mp4">
         </video>
     </div>
 
+    <!-- AUDIO SEPARADO -->
+    <audio id="audio-campaña" preload="auto">
+        <source src="./Audio/Audio-Losada-L22.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="content-frame">
         <div class="aesthetic-line"></div>
-        
+
         <div class="manifesto-grid">
             <div class="manifesto-text">
                 <h2 class="reveal-text">BOGOTÁ: <br><span class="glitch-red">EL LATIDO DE LA COMPASIÓN</span></h2>
                 <p class="human-copy">
-                    En cada frío amanecer de nuestra capital, miles de seres vulnerables enfrentan el silencio de la indiferencia. 
+                    En cada frío amanecer de nuestra capital, miles de seres vulnerables enfrentan el silencio de la indiferencia.
                     No tienen palabras para pedir justicia, pero tienen ojos que narran la historia de una ciudad que aún les debe la paz.
                 </p>
                 <div class="leader-focus">
                     <span class="leader-tag">LIDERAZGO REAL</span>
                     <h3>JUAN CARLOS LOSADA</h3>
                     <p>
-                        No es solo un nombre en una lista; es la voz que ha convertido el dolor en ley. 
-                        Un líder que entiende que una Bogotá avanzada no es la de cemento, sino la que protege la vida en todas sus formas. 
+                        No es solo un nombre en una lista; es la voz que ha convertido el dolor en ley.
+                        Un líder que entiende que una Bogotá avanzada no es la de cemento, sino la que protege la vida en todas sus formas.
                     </p>
                 </div>
             </div>
@@ -324,115 +375,104 @@
 </section>
 
 <style>
-    /* Mantenemos tus estilos originales pero aseguramos el render del video */
-    .vision-section {
-        position: relative;
-        min-height: 120vh;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-        background: #000;
-        padding: 100px 5vw;
-    }
+.hidden-preload { display:none; }
 
-    .video-background-container {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        z-index: 0;
-        clip-path: inset(5% 5% 5% 5% round 40px);
-        transition: clip-path 1.5s cubic-bezier(0.77, 0, 0.175, 1);
-        background: #000;
-    }
+.vision-section {
+    position: relative;
+    min-height: 120vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: #000;
+    padding: 100px 5vw;
+}
 
-    .bg-video {
-        width: 100%; height: 100%;
-        object-fit: cover;
-        opacity: 0.4;
-        display: block;
-    }
+.video-background-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    clip-path: inset(5% round 40px);
+    transition: clip-path 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
 
-    .video-overlay {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(to right, #000 20%, transparent 60%, #000 100%),
-                    linear-gradient(to bottom, #000 0%, transparent 40%, #000 100%);
-        z-index: 1;
-    }
+.bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4;
+}
 
-    /* Resto de estilos del manifiesto y grid heredados correctamente... */
-    .content-frame { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; width: 100%; }
-    .aesthetic-line { width: 60px; height: 4px; background: #ff0015; margin-bottom: 30px; box-shadow: 0 0 20px #ff0015; }
-    .manifesto-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px; align-items: center; }
-    .reveal-text { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900; letter-spacing: -2px; line-height: 1; margin-bottom: 20px; color: #fff; }
-    .glitch-red { color: #ff0015; text-shadow: 2px 2px 0px rgba(255,255,255,0.1); }
-    .human-copy { font-size: 1.4rem; color: #eee; line-height: 1.6; margin-bottom: 40px; font-weight: 300; }
-    .leader-focus { background: rgba(255, 255, 255, 0.03); padding: 30px; border-left: 2px solid #ff0015; backdrop-filter: blur(10px); color: #fff; }
-    
-    .tech-deco { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .scanner-circle { width: 250px; height: 250px; border: 1px solid rgba(255, 0, 21, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; }
-    .scanner-circle::after { content: ''; position: absolute; width: 105%; height: 105%; border: 2px solid #ff0015; border-radius: 50%; border-top-color: transparent; border-bottom-color: transparent; animation: spin 4s linear infinite; }
-    .inner-pulse { width: 180px; height: 180px; background: radial-gradient(circle, rgba(255, 0, 21, 0.2) 0%, transparent 70%); border-radius: 50%; animation: pulseGeo 2s ease-in-out infinite; }
-    
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-    @keyframes pulseGeo { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 0.8; } }
+.video-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #000 20%, transparent 60%, #000 100%),
+                linear-gradient(to bottom, #000 0%, transparent 40%, #000 100%);
+    z-index: 1;
+}
 
-    @media (max-width: 968px) {
-        .manifesto-grid { grid-template-columns: 1fr; }
-        .tech-deco { display: none; }
-        .video-background-container { clip-path: inset(0); }
-    }
+.content-frame { position: relative; z-index: 2; max-width: 1200px; margin: auto; }
+.aesthetic-line { width: 60px; height: 4px; background: red; margin-bottom: 30px; }
+.manifesto-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px; align-items: center; }
+.reveal-text { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900; }
+.glitch-red { color: red; }
+.human-copy { font-size: 1.4rem; color: #eee; line-height: 1.6; margin-bottom: 40px; }
+
+.tech-deco { display: flex; flex-direction: column; align-items: center; }
+.scanner-circle {
+    width: 250px; height: 250px; border: 1px solid rgba(255,0,21,0.2);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+}
+.inner-pulse {
+    width: 180px; height: 180px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,0,21,0.2) 0%, transparent 70%);
+    animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:.5;} 50%{transform:scale(1.1);opacity:.8;} }
+
+@media (max-width: 968px) {
+    .manifesto-grid { grid-template-columns: 1fr; }
+    .tech-deco { display:none; }
+    .video-background-container { clip-path: inset(0); }
+}
 </style>
 
 <script>
-    /**
-     * RED SAPIEN - AUDIO & VIDEO ENGINE v2.0
-     */
-    const video = document.getElementById('video-principal-senado');
+document.addEventListener("DOMContentLoaded", () => {
+    const video = document.getElementById("video-principal-senado");
+    const audio = document.getElementById("audio-campaña");
 
-    // Forzar carga del video
-    video.load();
+    // Asegurar autoplay del video en mute
+    video.play().catch(()=>{});
 
-    // Función maestra para activar sonido
-    const forceAudio = () => {
-        if (video.muted) {
-            video.muted = false;
-            video.volume = 0.8; // Ajuste de volumen para impacto
-            
-            // Intentamos reproducir por si el navegador lo pausó al intentar desmutear
-            const playPromise = video.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.then(_ => {
-                    console.log("Audio hackeado con éxito.");
-                }).catch(error => {
-                    console.log("El navegador requiere una interacción más directa.");
-                });
-            }
-        }
-        
-        // Removemos los eventos una vez se active para no consumir recursos
-        window.removeEventListener('scroll', forceAudio);
-        window.removeEventListener('click', forceAudio);
-        window.removeEventListener('touchstart', forceAudio);
+    const activarAudio = () => {
+        audio.play().then(()=>{
+            console.log("🔊 Audio activado correctamente");
+        }).catch(()=>{});
+
+        window.removeEventListener("click", activarAudio);
+        window.removeEventListener("touchstart", activarAudio);
+        window.removeEventListener("keydown", activarAudio);
     };
 
-    // Escuchadores globales: El primero que ocurra activa la web
-    window.addEventListener('scroll', forceAudio, { passive: true });
-    window.addEventListener('click', forceAudio);
-    window.addEventListener('touchstart', forceAudio, { passive: true });
+    window.addEventListener("click", activarAudio, { once:true });
+    window.addEventListener("touchstart", activarAudio, { once:true });
+    window.addEventListener("keydown", activarAudio, { once:true });
+});
 
-    // Animación de Revelación (Clip-Path)
-    window.addEventListener('scroll', () => {
-        const videoBg = document.querySelector('.video-background-container');
-        const section = document.querySelector('.vision-section');
-        const rect = section.getBoundingClientRect();
-        
-        // Cuando la sección entra en el 50% de la pantalla, se expande el video
-        if(rect.top < window.innerHeight * 0.5) {
-            videoBg.style.clipPath = 'inset(0% 0% 0% 0% round 0px)';
-        }
-    });
+// Efecto visual al hacer scroll
+window.addEventListener('scroll', () => {
+    const section = document.querySelector('.vision-section');
+    const videoBg = document.querySelector('.video-background-container');
+    const rect = section.getBoundingClientRect();
+
+    if(rect.top < window.innerHeight * 0.5) {
+        videoBg.style.clipPath = 'inset(0% round 0px)';
+    }
+});
 </script>
+
 <section class="justice-section" id="justice-zone">
     <div class="eyes-background">
         <div class="eye-layer eye-toro"></div>
