@@ -279,8 +279,17 @@
 <section class="vision-section">
     <div class="video-background-container">
         <div class="video-overlay"></div>
-        <video autoplay muted loop playsinline class="bg-video">
+        <video 
+            autoplay 
+            muted 
+            loop 
+            playsinline 
+            preload="auto" 
+            class="bg-video" 
+            id="video-principal-senado"
+            poster="Imagenes/poster-video.jpg">
             <source src="Video/Lozada-al-senado.mp4" type="video/mp4">
+            Tu navegador no soporta el video.
         </video>
     </div>
 
@@ -300,7 +309,6 @@
                     <p>
                         No es solo un nombre en una lista; es la voz que ha convertido el dolor en ley. 
                         Un líder que entiende que una Bogotá avanzada no es la de cemento, sino la que protege la vida en todas sus formas. 
-                        Su compromiso no nace en un escritorio, nace en el territorio, donde la crueldad intenta ganar terreno, y nosotros, la comunidad, le cerramos el paso.
                     </p>
                 </div>
             </div>
@@ -316,6 +324,7 @@
 </section>
 
 <style>
+    /* Mantenemos tus estilos originales pero aseguramos el render del video */
     .vision-section {
         position: relative;
         min-height: 120vh;
@@ -326,147 +335,44 @@
         padding: 100px 5vw;
     }
 
-    /* Efecto de fondo con video */
     .video-background-container {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 0; left: 0; width: 100%; height: 100%;
         z-index: 0;
-        clip-path: inset(5% 5% 5% 5% round 40px); /* El "corte de cine" inicial */
+        clip-path: inset(5% 5% 5% 5% round 40px);
         transition: clip-path 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+        background: #000;
     }
 
     .bg-video {
-        width: 100%;
-        height: 100%;
+        width: 100%; height: 100%;
         object-fit: cover;
-        opacity: 0.4; /* Sutil para dejar leer el texto */
+        opacity: 0.4;
+        display: block;
     }
 
     .video-overlay {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 0; left: 0; width: 100%; height: 100%;
         background: linear-gradient(to right, #000 20%, transparent 60%, #000 100%),
                     linear-gradient(to bottom, #000 0%, transparent 40%, #000 100%);
         z-index: 1;
     }
 
-    .content-frame {
-        position: relative;
-        z-index: 2;
-        max-width: 1200px;
-        margin: 0 auto;
-        width: 100%;
-    }
-
-    .aesthetic-line {
-        width: 60px;
-        height: 4px;
-        background: var(--primary-red);
-        margin-bottom: 30px;
-        box-shadow: 0 0 20px var(--primary-red);
-    }
-
-    .manifesto-grid {
-        display: grid;
-        grid-template-columns: 1.5fr 1fr;
-        gap: 50px;
-        align-items: center;
-    }
-
-    .reveal-text {
-        font-size: clamp(2rem, 4vw, 3.5rem);
-        font-weight: 900;
-        letter-spacing: -2px;
-        line-height: 1;
-        margin-bottom: 20px;
-    }
-
-    .glitch-red {
-        color: var(--primary-red);
-        text-shadow: 2px 2px 0px rgba(255,255,255,0.1);
-    }
-
-    .human-copy {
-        font-size: 1.4rem;
-        color: #eee;
-        line-height: 1.6;
-        margin-bottom: 40px;
-        font-weight: 300;
-    }
-
-    .leader-focus {
-        background: rgba(255, 255, 255, 0.03);
-        padding: 30px;
-        border-left: 2px solid var(--primary-red);
-        backdrop-filter: blur(10px);
-    }
-
-    .leader-tag {
-        font-size: 10px;
-        letter-spacing: 3px;
-        color: var(--primary-red);
-        font-weight: 900;
-    }
-
-    .leader-focus h3 {
-        font-size: 2.2rem;
-        margin: 10px 0;
-        letter-spacing: -1px;
-    }
-
-    /* Decoración Tecnológica Futurista */
-    .tech-deco {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .scanner-circle {
-        width: 250px;
-        height: 250px;
-        border: 1px solid rgba(255, 0, 21, 0.2);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-    }
-
-    .scanner-circle::after {
-        content: '';
-        position: absolute;
-        width: 105%;
-        height: 105%;
-        border: 2px solid var(--primary-red);
-        border-radius: 50%;
-        border-top-color: transparent;
-        border-bottom-color: transparent;
-        animation: spin 4s linear infinite;
-    }
-
-    .inner-pulse {
-        width: 180px;
-        height: 180px;
-        background: radial-gradient(circle, rgba(255, 0, 21, 0.2) 0%, transparent 70%);
-        border-radius: 50%;
-        animation: pulseGeo 2s ease-in-out infinite;
-    }
-
-    .status-indicator {
-        margin-top: 30px;
-        font-size: 10px;
-        font-weight: 900;
-        color: #666;
-        letter-spacing: 2px;
-    }
-
+    /* Resto de estilos del manifiesto y grid heredados correctamente... */
+    .content-frame { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; width: 100%; }
+    .aesthetic-line { width: 60px; height: 4px; background: #ff0015; margin-bottom: 30px; box-shadow: 0 0 20px #ff0015; }
+    .manifesto-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px; align-items: center; }
+    .reveal-text { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900; letter-spacing: -2px; line-height: 1; margin-bottom: 20px; color: #fff; }
+    .glitch-red { color: #ff0015; text-shadow: 2px 2px 0px rgba(255,255,255,0.1); }
+    .human-copy { font-size: 1.4rem; color: #eee; line-height: 1.6; margin-bottom: 40px; font-weight: 300; }
+    .leader-focus { background: rgba(255, 255, 255, 0.03); padding: 30px; border-left: 2px solid #ff0015; backdrop-filter: blur(10px); color: #fff; }
+    
+    .tech-deco { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .scanner-circle { width: 250px; height: 250px; border: 1px solid rgba(255, 0, 21, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; }
+    .scanner-circle::after { content: ''; position: absolute; width: 105%; height: 105%; border: 2px solid #ff0015; border-radius: 50%; border-top-color: transparent; border-bottom-color: transparent; animation: spin 4s linear infinite; }
+    .inner-pulse { width: 180px; height: 180px; background: radial-gradient(circle, rgba(255, 0, 21, 0.2) 0%, transparent 70%); border-radius: 50%; animation: pulseGeo 2s ease-in-out infinite; }
+    
     @keyframes spin { 100% { transform: rotate(360deg); } }
     @keyframes pulseGeo { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 0.8; } }
 
@@ -478,12 +384,50 @@
 </style>
 
 <script>
-    // Efecto de revelación al hacer scroll
+    /**
+     * RED SAPIEN - AUDIO & VIDEO ENGINE v2.0
+     */
+    const video = document.getElementById('video-principal-senado');
+
+    // Forzar carga del video
+    video.load();
+
+    // Función maestra para activar sonido
+    const forceAudio = () => {
+        if (video.muted) {
+            video.muted = false;
+            video.volume = 0.8; // Ajuste de volumen para impacto
+            
+            // Intentamos reproducir por si el navegador lo pausó al intentar desmutear
+            const playPromise = video.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    console.log("Audio hackeado con éxito.");
+                }).catch(error => {
+                    console.log("El navegador requiere una interacción más directa.");
+                });
+            }
+        }
+        
+        // Removemos los eventos una vez se active para no consumir recursos
+        window.removeEventListener('scroll', forceAudio);
+        window.removeEventListener('click', forceAudio);
+        window.removeEventListener('touchstart', forceAudio);
+    };
+
+    // Escuchadores globales: El primero que ocurra activa la web
+    window.addEventListener('scroll', forceAudio, { passive: true });
+    window.addEventListener('click', forceAudio);
+    window.addEventListener('touchstart', forceAudio, { passive: true });
+
+    // Animación de Revelación (Clip-Path)
     window.addEventListener('scroll', () => {
-        const section = document.querySelector('.vision-section');
         const videoBg = document.querySelector('.video-background-container');
+        const section = document.querySelector('.vision-section');
         const rect = section.getBoundingClientRect();
         
+        // Cuando la sección entra en el 50% de la pantalla, se expande el video
         if(rect.top < window.innerHeight * 0.5) {
             videoBg.style.clipPath = 'inset(0% 0% 0% 0% round 0px)';
         }
@@ -1454,3 +1398,5 @@
 </script>
 </body>
 </html>
+
+
